@@ -1,2 +1,2 @@
 # ENGETO2_Project1.py
- Projekt pro testing akademii
+First project for ENGETOs testing academy
