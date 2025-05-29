@@ -10,7 +10,11 @@ def hlavni_menu():
         print("3. Odstranit úkol")
         print("4. Konec programu")
         print("=================================")
-        volba_menu = int(input("Vyberte možnost (1-4): "))
+        try:
+            volba_menu = int(input("Vyberte možnost (1-4): "))
+        except ValueError:
+            print("Zadejte platné číslo mezi 1 a 4!")
+            continue
         print("\n")
         if volba_menu in range(1,5):
             if volba_menu == 1:
@@ -31,7 +35,6 @@ def pridat_ukol():
         popis_ukol = input("Zadejte popis úkolu: ")
         if len(nazev_ukol) and len(popis_ukol) > 0:
             ukol = nazev_ukol + (" - ") + popis_ukol
-
             ukoly.append(ukol)
             print("Úkol " +"'"+nazev_ukol+"'" +" byl přidán.")
             hlavni_menu()
@@ -39,18 +42,30 @@ def pridat_ukol():
             print("Název a popis úkolu musí obsahovat text! ")
 
 def zobrazit_ukoly():
+    if not ukoly:
+        print("Seznam úkolů je prázdný. Není co zobrazit.")
+        return
     i = 1
+    print("Seznam úkolu: ")
     for ukol in ukoly:
-        i = +i
-        print("Seznam úkolu: ")
         print(str(i) + (". ") + ukol)
+        i += 1
     
 def odstranit_ukol():
-    zobrazit_ukoly()
-    print("\n")
-    print("\n")
-    vymaz_ukol = int(input("Zadejte číslo úkolu, který chcete odstranit: ")) - 1
-    ukoly.pop(vymaz_ukol)
+    while True:
+        if not ukoly:
+            print("Seznam úkolů je prázdný. Není co odstraňovat.")
+            return
+        zobrazit_ukoly()
+        print("\n")
+        print("\n")
+        vymaz_ukol = int(input("Zadejte číslo úkolu, který chcete odstranit: ")) - 1
+        if vymaz_ukol + 1 <= len(ukoly):
+            ukoly.pop(vymaz_ukol)
+            print("Úkol "+"'"+str(vymaz_ukol+1)+"'"+" byl odstraněn.")
+            hlavni_menu()
+        else:
+            print("Tento úkol neexistuje!")
 
 
 hlavni_menu()
